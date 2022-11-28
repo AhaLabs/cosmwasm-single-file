@@ -9,14 +9,14 @@ use thiserror::Error;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, JsonSchema)]
 pub struct State {
-    pub count: i32,
+    pub count: i8,
 }
 
 pub const STATE: Item<State> = Item::new("state");
 
 #[cw_serde]
 pub struct InstantiateMsg {
-    pub count: i32,
+    pub count: i8,
 }
 
 #[cw_serde]
@@ -35,7 +35,7 @@ pub enum QueryMsg {
 // We define a custom struct for each query response
 #[cw_serde]
 pub struct GetNumResponse {
-    pub count: i32,
+    pub count: i8,
 }
 
 #[derive(Error, Debug)]
@@ -53,10 +53,7 @@ pub fn instantiate(
 ) -> Result<Response, ContractError> {
     let state = State { count: msg.count };
     STATE.save(deps.storage, &state)?;
-
-    Ok(Response::new()
-        .add_attribute("method", "instantiate")
-        .add_attribute("count", msg.count.to_string()))
+    Ok(Response::new())
 }
 
 #[entry_point]
