@@ -80,8 +80,8 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
         QueryMsg::GetNum {} => {
             let state = STATE.load(deps.storage)?;
-            let count = GetNumResponse { count: state.count };
-            to_binary(&count)
+            let raw_response = GetNumResponse { count: state.count };
+            to_binary(&raw_response)
         }
     }
 }
